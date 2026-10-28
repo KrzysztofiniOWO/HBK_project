@@ -1,0 +1,55 @@
+================================================================================
+HBK CONSOLE CALCULATOR - SOFTWARE DESIGN & VERIFICATION DOCUMENT
+================================================================================
+
+1. ARCHITECTURAL OVERVIEW
+The project follows standard compiler frontend architecture principles and 
+the Single Responsibility Principle (SRP) by isolating lexical analysis, 
+mathematical evaluation, and user interaction into decoupled components:
+
+- Lexical Analysis & Validation (Tokenizer):
+  * Scans the raw character stream, filters non-semantic whitespace, and extracts 
+    tokens into a strongly-typed Token representation (TokenType::Number, Add, 
+    Subtract, Multiply, Divide).
+  * Converts numeric sequences into double-precision floating-point values 
+    using std::stod with offset tracking.
+  * Enforces grammar constraints in a linear validation pass: ensures the expression 
+    is non-empty, begins and ends with an operand, and strictly follows the alternating 
+    pattern (Number -> Operator -> Number).
+
+- Evaluation Engine (CalculatorEngine):
+  Calculates results using a two-pass linear reduction algorithm:
+  * Pass 1 (Multiplicative reduction): Iterates through tokens. Whenever '*' or '/' 
+    is encountered, the operator and its neighboring operands are immediately 
+    evaluated and collapsed into a single resulting operand token. Division by zero 
+    is caught and reported using epsilon threshold comparison.
+  * Pass 2 (Additive evaluation): Processes the remaining linear chain containing 
+    only '+' and '-' operators strictly from left to right.
+
+- Interface & Orchestration (main.cpp):
+  Encapsulates the REPL (Read-Eval-Print Loop), standard input/output formatting, 
+  and top-level exception handling without polluting core business logic.
+
+Complexity:
+- Time Complexity: O(N) where N is the number of tokens in the expression.
+- Space Complexity: O(N) auxiliary space used for token storage.
+
+2. KEY DESIGN DECISIONS
+- Zero External Dependencies: Built strictly using standard C++17 library 
+  components (<vector>, <string>, <cmath>, <stdexcept>, <iostream>) to comply 
+  with the zero third-party component requirement.
+- Modular CMake Build: The domain logic is compiled into a static library 
+  (calculator_core), consumed independently by both the CLI binary and the test binary.
+- Robust Error Handling: Syntax errors, malformed numbers, and division by zero 
+  throw standard std::runtime_error exceptions with descriptive error messages, 
+  preventing application crashes and ensuring resilient REPL execution.
+
+3. VERIFICATION STRATEGY
+Correctness was verified through a dedicated standalone test suite 
+(tests/test_calculator.cpp) integrated with CTest:
+- Operator Precedence: Validated complex mixed chains (e.g. 10-2*6/4 = 7, 2+3*4 = 14).
+- Floating Point Arithmetic: Tested fractional and decimal operands (e.g. 5.5 + 2.25 = 7.75).
+- Left-Associativity: Confirmed sequential operations of equal precedence (e.g. 100/2/2 = 25).
+- Boundary & Failure Cases: Tested zero division (10/0), leading/trailing operators 
+  (+5+3, 5+3-), consecutive operators (5++3), missing operators (5 3+2), invalid 
+  characters, and empty strings.

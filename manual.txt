@@ -1,0 +1,61 @@
+================================================================================
+HBK CONSOLE CALCULATOR - USER MANUAL
+================================================================================
+
+1. OVERVIEW
+HBK Console Calculator is a standalone command-line application that evaluates 
+mathematical expressions containing arbitrary operands and standard operators 
+(+, -, *, /) while strictly adhering to mathematical operator precedence.
+
+2. SYSTEM PREREQUISITES
+- C++17 compatible compiler (e.g. GCC / MinGW g++, Clang, or MSVC).
+- CMake 3.15 or newer.
+- No third-party dependencies or external libraries are required.
+
+3. BUILD INSTRUCTIONS
+From the project root directory, run the following commands:
+
+Using CMake with MinGW:
+    cmake -G "MinGW Makefiles" -DCMAKE_CXX_COMPILER="D:/mingw/mingw64/bin/g++.exe" -DCMAKE_C_COMPILER="D:/mingw/mingw64/bin/gcc.exe" -B build -S .
+    cmake --build build
+
+Standard CMake (Default system toolchain):
+    cmake -B build -S .
+    cmake --build build
+
+This produces two binaries inside the build/ directory:
+- build/calculator.exe       (Interactive calculator CLI)
+- build/calculator_tests.exe (Automated test suite)
+
+4. RUNNING THE APPLICATION
+Launch the interactive console:
+    .\build\calculator.exe
+
+Type an expression at the prompt and press Enter:
+    > 10-2*6/4
+    = 7
+
+    > 2 + 3 * 4.5
+    = 15.5
+
+To terminate the application, type:
+    exit
+or
+    quit
+
+5. RUNNING THE TEST SUITE
+Run the unit test runner directly:
+    .\build\calculator_tests.exe
+
+Alternatively, run via CTest:
+    ctest --test-dir build --output-on-failure
+
+6. INPUT FORMAT & RULES
+- Supported operators: +, -, *, /
+- Supported operands: Non-negative real numbers, including integers and decimals.
+- Expressions must begin and end with a numeric value.
+- Arbitrary whitespace between numbers and operators is accepted and ignored.
+- Operator precedence: Multiplication and Division take precedence over Addition 
+  and Subtraction. Operations of equal precedence are evaluated from left to right.
+- Syntactically invalid expressions (e.g. consecutive operators, missing operands, 
+  unrecognized characters, division by zero) produce clear, user-friendly error messages.
