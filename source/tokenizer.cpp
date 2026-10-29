@@ -4,6 +4,8 @@
 
 std::vector<Token> Tokenizer::tokenize(const std::string& input) {
     std::vector<Token> tokens;
+    tokens.reserve(input.length() / 2 + 1);
+
     size_t i = 0;
     const size_t n = input.length();
 
@@ -15,7 +17,11 @@ std::vector<Token> Tokenizer::tokenize(const std::string& input) {
             continue;
         }
 
-        if (std::isdigit(static_cast<unsigned char>(c)) || c == '.') {
+        // Liczba musi zaczynać się od cyfry, lub od kropki po której zaraz jest cyfra (np. .5)
+        bool isNumberStart = std::isdigit(static_cast<unsigned char>(c)) || 
+                             (c == '.' && (i + 1 < n) && std::isdigit(static_cast<unsigned char>(input[i + 1])));
+
+        if (isNumberStart) {
             size_t nextIdx = 0;
             std::string sub = input.substr(i);
             try {

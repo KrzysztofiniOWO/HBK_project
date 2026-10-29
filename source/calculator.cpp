@@ -1,5 +1,5 @@
 #include "calculator.hpp"
-#include "Tokenizer.hpp"
+#include "tokenizer.hpp"
 #include <cmath>
 #include <limits>
 #include <stdexcept>

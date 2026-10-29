@@ -1,4 +1,4 @@
-#include "Calculator.hpp"
+#include "calculator.hpp"
 #include <iostream>
 #include <string>
 #include <iomanip>
