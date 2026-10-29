@@ -66,4 +66,4 @@ A lightweight console calculator implemented in modern **C++17** that evaluates 
 - **Robust Error Handling:** Detects zero division, malformed numbers, and syntax errors.
 - **Comprehensive Test Suite:** Unit tests covering basic math, operator precedence, precision, and error diagnostics.
 
-> For detailed technical design and user documentation, refer to `DESIGN.txt` and `MANUAL.txt`.
+> For detailed technical design and user documentation, refer to `design.txt` and `manual.txt`.
