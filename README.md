@@ -39,20 +39,22 @@ A lightweight console calculator implemented in modern **C++17** that evaluates 
 
 ## Project Structure
 
+```text
 .
 ├── include/
-│   ├── token.hpp           # Token definitions and data structures
-│   ├── tokenizer.hpp       # Lexical analyzer interface
-│   └── calculator.hpp      # Two-pass calculation engine interface
+│   ├── token.hpp             # Token definitions and data structures
+│   ├── tokenizer.hpp         # Lexical analyzer interface
+│   └── calculator.hpp        # Two-pass calculation engine interface
 ├── source/
-│   ├── tokenizer.cpp       # Lexer implementation & grammar validation
-│   ├── calculator.cpp      # Operator precedence & evaluation logic
-│   └── main.cpp            # Interactive CLI REPL loop
+│   ├── tokenizer.cpp         # Lexer implementation & grammar validation
+│   ├── calculator.cpp        # Operator precedence & evaluation logic
+│   └── main.cpp              # Interactive CLI REPL loop
 ├── tests/
-│   └── test_calculator.cpp # Standalone unit & edge case tests
-├── CMakeLists.txt          # Build configuration
-├── MANUAL.txt              # Detailed user manual
-└── DESIGN.txt              # Software design & verification document
+│   └── test_calculator.cpp   # Standalone unit & edge case tests
+├── CMakeLists.txt            # Build configuration
+├── MANUAL.txt                # Detailed user manual
+└── DESIGN.txt                # Software design & verification document
+```
 
 ---
 
